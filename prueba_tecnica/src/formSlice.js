@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   rut: '',
   nombre: '',
-  apellido: '',
   patente: '',
   marca: '',
   modelo: '',
@@ -12,6 +11,7 @@ const initialState = {
   marcas: ['Toyota', 'Ford', 'Chevrolet', 'Nissan', 'Honda'],
   modelos: ['Corolla', 'Mustang', 'Camaro', 'Altima', 'Civic'],
   registros: [],
+  nombreCompleto: '',
 };
 
 const formSlice = createSlice({
@@ -24,9 +24,8 @@ const formSlice = createSlice({
     },
     addRegistro: (state) => {
       const newRegistro = {
-        rut: state.rut,
         nombre: state.nombre,
-        apellido: state.apellido,
+        rut: state.rut,
         patente: state.patente,
         marca: state.marca,
         modelo: state.modelo,
@@ -36,15 +35,18 @@ const formSlice = createSlice({
       state.registros = [newRegistro, ...state.registros].slice(0, 10);
       state.rut = '';
       state.nombre = '';
-      state.apellido = '';
       state.patente = '';
       state.marca = '';
       state.modelo = '';
       state.marcaDos = '';
       state.precio = '';
     },
+
+    deleteRegistro: (state, action) => {
+        state.registros.splice(action.payload, 1);
+      },
   },
 });
 
-export const { updateField, addRegistro } = formSlice.actions;
+export const { updateField, addRegistro, deleteRegistro  } = formSlice.actions;
 export default formSlice.reducer;
