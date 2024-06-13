@@ -12,8 +12,9 @@ const RegistroContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const RegistroItem = styled.div`
@@ -24,7 +25,12 @@ const RegistroItem = styled.div`
   border: 1px solid #ccc;
   border-radius: 4px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+`;
+
+const RegistroColumna = styled.div`
+  width: calc(100% / 7); /* Divide el ancho en 7 columnas */
+  padding: 5px;
 `;
 
 const DeleteButton = styled.button`
@@ -45,15 +51,24 @@ const Registros = () => {
   return (
     <RegistroContainer>
       <h2>Últimos 10 Registros</h2>
+      <RegistroItem>
+        <RegistroColumna><strong>Nombre</strong></RegistroColumna>
+        <RegistroColumna><strong>RUT</strong></RegistroColumna>
+        <RegistroColumna><strong>Patente</strong></RegistroColumna>
+        <RegistroColumna><strong>Marca</strong></RegistroColumna>
+        <RegistroColumna><strong>Modelo</strong></RegistroColumna>
+        {/* <RegistroColumna><strong>Segunda Marca</strong></RegistroColumna> */}
+        <RegistroColumna><strong>Precio</strong></RegistroColumna>
+      </RegistroItem>
       {registros.map((registro, index) => (
         <RegistroItem key={index}>
-          <p><strong>Nombre:</strong> {registro.nombre} {registro.apellido}</p>
-          <p><strong>RUT:</strong> {registro.rut}</p>
-          <p><strong>Patente:</strong> {registro.patente}</p>
-          <p><strong>Marca:</strong> {registro.marca}</p>
-          <p><strong>Modelo:</strong> {registro.modelo}</p>
-          <p><strong>Segunda Marca:</strong> {registro.marcaDos}</p>
-          <p><strong>Precio:</strong> {registro.precio}</p>
+          <RegistroColumna>{registro.nombre} {registro.apellido}</RegistroColumna>
+          <RegistroColumna>{registro.rut}</RegistroColumna>
+          <RegistroColumna>{registro.patente}</RegistroColumna>
+          <RegistroColumna>{registro.marca}</RegistroColumna>
+          <RegistroColumna>{registro.modelo}</RegistroColumna>
+          {/* <RegistroColumna>{registro.marcaDos}</RegistroColumna> */}
+          <RegistroColumna>{registro.precio}</RegistroColumna>
           <DeleteButton onClick={() => handleDeleteRegistro(index)}>
             <FaTrash />
           </DeleteButton>

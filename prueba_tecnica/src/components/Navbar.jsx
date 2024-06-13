@@ -7,11 +7,11 @@ const Nav = styled.nav`
   padding: 10px;
   display: flex;
   justify-content: right;
-  box-shadow: 0 4px 2px -2px gray;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledNavLink = styled(NavLink)`
-  color: #007bff;
+  color: #002EFF;
   text-decoration: none;
   font-weight: bold;
   padding: 10px 20px;
@@ -19,10 +19,10 @@ const StyledNavLink = styled(NavLink)`
   
   &.active {
     background-color: #EEEBEB;
-    color: #007bff;
+    color: #002EFF;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 
