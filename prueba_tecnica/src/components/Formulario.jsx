@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateField, addRegistro } from "../formSlice";
 import styled from "styled-components";
@@ -114,15 +114,31 @@ const Formulario = () => {
   const form = useSelector((state) => state.form);
   const { marcas, modelos } = form;
 
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch(updateField({ field: name, value }));
-    console.log(`Field: ${name}, Value: ${value}`);
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addRegistro());
+    const newErrors = {};
+
+    // Campos requeridos
+    const requiredFields = ["nombre", "rut", "patente", "marca", "modelo", "precio"];
+    requiredFields.forEach((field) => {
+      if (!form[field]) {
+        newErrors[field] = "Este campo es obligatorio";
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      dispatch(addRegistro());
+    }
   };
 
   return (
@@ -133,8 +149,8 @@ const Formulario = () => {
       <form onSubmit={handleSubmit}>
         <FormRow>
           <Column>
-            <InputGroup class-name="input-group">
-              <Label className="input-group__label" htmlFor="nombre">
+            <InputGroup className="input-group">
+              <Label className="input-group__label" htmlFor="nombre" required>
                 Nombre Completo
               </Label>
               <Input
@@ -143,12 +159,14 @@ const Formulario = () => {
                 className="input-group__input"
                 value={form.nombre}
                 onChange={handleChange}
+                aria-required="true"
               />
+              {errors.nombre && <Error>{errors.nombre}</Error>}
             </InputGroup>
           </Column>
           <Column>
             <InputGroup className="input-group">
-              <Label className="input-group__label" htmlFor="rut">
+              <Label className="input-group__label" htmlFor="rut" required>
                 Rut
               </Label>
               <Input
@@ -157,7 +175,9 @@ const Formulario = () => {
                 className="input-group__input"
                 value={form.rut}
                 onChange={handleChange}
+                aria-required="true"
               />
+              {errors.rut && <Error>{errors.rut}</Error>}
             </InputGroup>
           </Column>
         </FormRow>
@@ -166,7 +186,7 @@ const Formulario = () => {
         <FormRow>
           <Column>
             <InputGroup className="input-group">
-              <Label className="input-group__label" htmlFor="patente">
+              <Label className="input-group__label" htmlFor="patente" required>
                 Patente
               </Label>
               <Input
@@ -174,15 +194,22 @@ const Formulario = () => {
                 name="patente"
                 value={form.patente}
                 onChange={handleChange}
+                aria-required="true"
               />
+              {errors.patente && <Error>{errors.patente}</Error>}
             </InputGroup>
           </Column>
           <Column>
             <InputGroup className="input-group">
-              <Label className="input-group__label" htmlFor="marca">
+              <Label className="input-group__label" htmlFor="marca" required>
                 Marca del vehiculo
               </Label>
-              <Select name="marca" value={form.marca} onChange={handleChange}>
+              <Select
+                name="marca"
+                value={form.marca}
+                onChange={handleChange}
+                aria-required="true"
+              >
                 <option value=""></option>
                 {marcas.map((marca, index) => (
                   <option key={index} value={marca}>
@@ -190,28 +217,35 @@ const Formulario = () => {
                   </option>
                 ))}
               </Select>
+              {errors.marca && <Error>{errors.marca}</Error>}
             </InputGroup>
           </Column>
           <Column>
             <InputGroup className="input-group">
-              <Label className="input-group__label" htmlFor="modelo">
+              <Label className="input-group__label" htmlFor="modelo" required>
                 Modelo del vehiculo
               </Label>
-              <Select name="modelo" value={form.modelo} onChange={handleChange}>
+              <Select
+                name="modelo"
+                value={form.modelo}
+                onChange={handleChange}
+                aria-required="true"
+              >
                 <option value=""></option>
-                {form.modelos.map((modelo, index) => (
+                {modelos.map((modelo, index) => (
                   <option key={index} value={modelo}>
                     {modelo}
                   </option>
                 ))}
               </Select>
+              {errors.modelo && <Error>{errors.modelo}</Error>}
             </InputGroup>
           </Column>
         </FormRow>
         <FormRow>
           <Column>
             <InputGroup className="input-group">
-              <Label className="input-group__label" htmlFor="precio">
+              <Label className="input-group__label" htmlFor="precio" required>
                 Precio
               </Label>
               <Input
@@ -219,7 +253,9 @@ const Formulario = () => {
                 name="precio"
                 value={form.precio}
                 onChange={handleChange}
+                aria-required="true"
               />
+              {errors.precio && <Error>{errors.precio}</Error>}
             </InputGroup>
           </Column>
         </FormRow>
@@ -232,3 +268,9 @@ const Formulario = () => {
 };
 
 export default Formulario;
+
+const Error = styled.div`
+  color: red;
+  font-size: 0.75em;
+  margin-top: 0.25em;
+`;
