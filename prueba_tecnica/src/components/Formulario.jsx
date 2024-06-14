@@ -1,15 +1,20 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateField, addRegistro } from '../formSlice';
-import styled from 'styled-components';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateField, addRegistro } from "../formSlice";
+import styled from "styled-components";
 
 const Container = styled.div`
-  width: calc(100vw - 20vW);
   margin: 0;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  
+
+  @media (min-width: 768px) {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const FormRow = styled.div`
@@ -22,11 +27,35 @@ const FormRow = styled.div`
   }
 `;
 
+const InputGroup = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+`;
+
+const Label = styled.label`
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  margin-bottom: -0.5em;
+  text-transform: uppercase;
+  font-size: 0.575em;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  color: #002eff;
+  position: relative;
+  top: 15px;
+  left: 15px;
+  background-color: #fff;
+  width: fit-content;
+  white-space: nowrap;
+`;
+
 const Input = styled.input`
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 2px solid #002eff;
   border-radius: 4px;
   box-sizing: border-box;
 `;
@@ -35,7 +64,7 @@ const Select = styled.select`
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 2px solid #002eff;
   border-radius: 4px;
 `;
 
@@ -92,74 +121,100 @@ const Formulario = () => {
 
   return (
     <Container>
-      <h2>Datos del Vendedor:</h2>
+      <h2>Nuevo Formulario</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate optio commodi magnam, fugiat ea ut vero ipsa facilis iste molestiae, ducimus quis ex eveniet dolorem nesciunt. Iusto vel porro corporis.</p>
+      <h3>Datos del Vendedor:</h3>
       <form onSubmit={handleSubmit}>
         <FormRow>
           <Column>
-            <Input
-              type="text"
-              name="nombre"
-              placeholder="Nombre Completo"
-              value={form.nombre}
-              onChange={handleChange}
-            />
+            <InputGroup class-name="input-group">
+              <Label className="input-group__label" htmlFor="nombre">
+                Nombre Completo
+              </Label>
+              <Input
+                type="text"
+                name="nombre"
+                className="input-group__input"
+                value={form.nombre}
+                onChange={handleChange}
+              />
+            </InputGroup>
           </Column>
           <Column>
-            <Input
-              type="text"
-              name="rut"
-              placeholder="RUT del vendedor"
-              value={form.rut}
-              onChange={handleChange}
-            />
+            <InputGroup className="input-group">
+              <Label className="input-group__label" htmlFor="rut">
+                Rut
+              </Label>
+              <Input
+                type="text"
+                name="rut"
+                className="input-group__input"
+                value={form.rut}
+                onChange={handleChange}
+              />
+            </InputGroup>
           </Column>
         </FormRow>
         <Divider />
-        <h2>Datos del Vehículo:</h2>
+        <h3>Datos del Vehículo:</h3>
         <FormRow>
           <Column>
-            <Input
-              type="text"
-              name="patente"
-              placeholder="Patente"
-              value={form.patente}
-              onChange={handleChange}
-            />
+            <InputGroup className="input-group">
+              <Label className="input-group__label" htmlFor="patente">
+                Patente
+              </Label>
+              <Input
+                type="text"
+                name="patente"
+                value={form.patente}
+                onChange={handleChange}
+              />
+            </InputGroup>
           </Column>
           <Column>
-            <Select
-              name="marca"
-              value={form.marca}
-              onChange={handleChange}
-            >
-              <option value="">Seleccione una marca</option>
-              {marcas.map((marca, index) => (
-                <option key={index} value={marca}>{marca}</option>
-              ))}
-            </Select>
+            <InputGroup className="input-group">
+              <Label className="input-group__label" htmlFor="marca">
+                Marca del vehiculo
+              </Label>
+              <Select name="marca" value={form.marca} onChange={handleChange}>
+                <option value=""></option>
+                {marcas.map((marca, index) => (
+                  <option key={index} value={marca}>
+                    {marca}
+                  </option>
+                ))}
+              </Select>
+            </InputGroup>
           </Column>
           <Column>
-            <Select
-              name="modelo"
-              value={form.modelo}
-              onChange={handleChange}
-            >
-              <option value="">Seleccione un modelo</option>
-              {modelos.map((modelo, index) => (
-                <option key={index} value={modelo}>{modelo}</option>
-              ))}
-            </Select>
+            <InputGroup className="input-group">
+              <Label className="input-group__label" htmlFor="modelo">
+                Modelo del vehiculo
+              </Label>
+              <Select name="modelo" value={form.modelo} onChange={handleChange}>
+                <option value=""></option>
+                {modelos.map((modelo, index) => (
+                  <option key={index} value={modelo}>
+                    {modelo}
+                  </option>
+                ))}
+              </Select>
+            </InputGroup>
           </Column>
         </FormRow>
         <FormRow>
           <Column>
-            <Input
-              type="number"
-              name="precio"
-              placeholder="Precio"
-              value={form.precio}
-              onChange={handleChange}
-            />
+            <InputGroup className="input-group">
+              <Label className="input-group__label" htmlFor="precio">
+                Precio
+              </Label>
+              <Input
+                type="number"
+                name="precio"
+                value={form.precio}
+                onChange={handleChange}
+              />
+            </InputGroup>
           </Column>
         </FormRow>
         <ButtonContainer>

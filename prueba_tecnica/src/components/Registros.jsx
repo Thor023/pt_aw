@@ -20,7 +20,6 @@ const RegistroContainer = styled.div`
 const RegistroItem = styled.div`
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;

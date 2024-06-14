@@ -9,7 +9,13 @@ const initialState = {
   marcaDos: '',
   precio: '',
   marcas: ['Toyota', 'Ford', 'Chevrolet', 'Nissan', 'Honda'],
-  modelos: ['Corolla', 'Mustang', 'Camaro', 'Altima', 'Civic'],
+  modelosPorMarca: {
+    Toyota: ['Corolla', 'Camry'],
+    Ford: ['Mustang', 'F-150'],
+    Chevrolet: ['Camaro', 'Silverado'],
+    Nissan: ['Altima', 'Sentra'],
+    Honda: ['Civic', 'Accord'],
+  },
   registros: [],
   nombreCompleto: '',
 };
@@ -21,6 +27,9 @@ const formSlice = createSlice({
     updateField: (state, action) => {
       const { field, value } = action.payload;
       state[field] = value;
+      if (field === 'marca') {
+        state.modelo = '';
+      }
     },
     addRegistro: (state) => {
       const newRegistro = {

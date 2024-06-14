@@ -7,7 +7,7 @@ const Nav = styled.nav`
   padding: 10px;
   display: flex;
   justify-content: right;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 2px -2px gray;
 `;
 
 const StyledNavLink = styled(NavLink)`
