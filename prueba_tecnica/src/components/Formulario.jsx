@@ -11,7 +11,7 @@ const Container = styled.div`
   
 
   @media (min-width: 768px) {
-    max-width: 80%;
+    max-width: 50%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -49,6 +49,11 @@ const Label = styled.label`
   background-color: #fff;
   width: fit-content;
   white-space: nowrap;
+
+  &::after {
+    content: ${({ required }) => required ? '"*"' : '""'};
+    color: red;
+    margin-left: 0.25em;
 `;
 
 const Input = styled.input`
@@ -80,7 +85,7 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
   padding: 10px;
-  background-color: #007bff;
+  background-color: #002eff;
   color: white;
   border: none;
   border-radius: 25px;
@@ -112,6 +117,7 @@ const Formulario = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch(updateField({ field: name, value }));
+    console.log(`Field: ${name}, Value: ${value}`);
   };
 
   const handleSubmit = (e) => {
@@ -193,7 +199,7 @@ const Formulario = () => {
               </Label>
               <Select name="modelo" value={form.modelo} onChange={handleChange}>
                 <option value=""></option>
-                {modelos.map((modelo, index) => (
+                {form.modelos.map((modelo, index) => (
                   <option key={index} value={modelo}>
                     {modelo}
                   </option>

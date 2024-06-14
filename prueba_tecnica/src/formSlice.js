@@ -1,23 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  rut: '',
   nombre: '',
+  rut: '',
   patente: '',
   marca: '',
   modelo: '',
-  marcaDos: '',
   precio: '',
   marcas: ['Toyota', 'Ford', 'Chevrolet', 'Nissan', 'Honda'],
-  modelosPorMarca: {
-    Toyota: ['Corolla', 'Camry'],
-    Ford: ['Mustang', 'F-150'],
-    Chevrolet: ['Camaro', 'Silverado'],
-    Nissan: ['Altima', 'Sentra'],
-    Honda: ['Civic', 'Accord'],
-  },
+  modelosPorMarca:{},
   registros: [],
-  nombreCompleto: '',
+  modelos: [],
+};
+
+const modelosPorMarcaConst = {
+  Toyota: ['Corolla', 'Camry'],
+  Ford: ['Mustang', 'F-150'],
+  Chevrolet: ['Camaro', 'Silverado'],
+  Nissan: ['Altima', 'Sentra'],
+  Honda: ['Civic', 'Accord'],
 };
 
 const formSlice = createSlice({
@@ -27,9 +28,14 @@ const formSlice = createSlice({
     updateField: (state, action) => {
       const { field, value } = action.payload;
       state[field] = value;
-      if (field === 'marca') {
-        state.modelo = '';
-      }
+      if (field === 'marca' && modelosPorMarcaConst[value]) {
+        state.modelosPorMarca = { ...modelosPorMarcaConst }; // Copia la constante a modelosPorMarca
+        state.modelos = modelosPorMarcaConst[value];
+        state.modelo = ''; 
+      } 
+      
+  
+      console.log('Modelos por marca:', state.modelos);
     },
     addRegistro: (state) => {
       const newRegistro = {
