@@ -9,8 +9,27 @@ const initialState = {
   precio: '',
   marcas: ['Toyota', 'Ford', 'Chevrolet', 'Nissan', 'Honda'],
   modelosPorMarca:{},
-  registros: [],
   modelos: [],
+  //data inicial agregada para mostrar
+  registros: [
+    {
+      nombre: 'Juan Pérez',
+      rut: '11223344-5',
+      patente: 'XYZ123',
+      marca: 'Ford',
+      modelo: 'Mustang',
+      precio: '25000000',
+    },
+    {
+      nombre: 'María González',
+      rut: '99887766-4',
+      patente: 'ABC456',
+      marca: 'Chevrolet',
+      modelo: 'Camaro',
+      precio: '22000000',
+    },
+  ],
+  mensajeExito: ''
 };
 
 const modelosPorMarcaConst = {
@@ -53,15 +72,19 @@ const formSlice = createSlice({
       state.patente = '';
       state.marca = '';
       state.modelo = '';
-      state.marcaDos = '';
       state.precio = '';
+      state.mensajeExito = 'Solicitud Registrada con éxito';
     },
 
     deleteRegistro: (state, action) => {
-        state.registros.splice(action.payload, 1);
-      },
+      state.registros.splice(action.payload, 1);
+    },
+    clearMensajeExito: (state) => {
+      state.mensajeExito = ''; 
+    },
+
   },
 });
 
-export const { updateField, addRegistro, deleteRegistro  } = formSlice.actions;
+export const { updateField, addRegistro, deleteRegistro, clearMensajeExito  } = formSlice.actions;
 export default formSlice.reducer;

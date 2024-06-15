@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateField, addRegistro } from "../formSlice";
+import { updateField, addRegistro, clearMensajeExito } from "../formSlice";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -112,7 +112,7 @@ const Divider = styled.hr`
 const Formulario = () => {
   const dispatch = useDispatch();
   const form = useSelector((state) => state.form);
-  const { marcas, modelos } = form;
+  const { marcas, modelos, mensajeExito  } = form;
 
   const [errors, setErrors] = useState({});
 
@@ -133,13 +133,19 @@ const Formulario = () => {
         newErrors[field] = "Este campo es obligatorio";
       }
     });
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
       dispatch(addRegistro());
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(clearMensajeExito());
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [mensajeExito, dispatch]);
 
   return (
     <Container>
@@ -259,10 +265,14 @@ const Formulario = () => {
             </InputGroup>
           </Column>
         </FormRow>
+        {mensajeExito && (
+        <p style={{ color: 'green' }}>{mensajeExito}</p>
+        )}
         <ButtonContainer>
           <Button type="submit">Enviar</Button>
         </ButtonContainer>
       </form>
+
     </Container>
   );
 };
