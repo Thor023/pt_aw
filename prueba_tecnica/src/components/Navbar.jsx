@@ -30,9 +30,19 @@ const Navbar = () => {
   return (
     <Nav>
       <StyledNavLink to="/" exact>Formulario</StyledNavLink>
-      <StyledNavLink to="/registros">Registros</StyledNavLink>
+      {/* Mostrar el botón de "Registros" solo en pantallas de escritorio */}
+      <DesktopOnly>
+        <StyledNavLink to="/registros">Registros</StyledNavLink>
+      </DesktopOnly>
     </Nav>
   );
 };
+
+// Estilos para ocultar en móviles
+const DesktopOnly = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 
 export default Navbar;
