@@ -6,7 +6,8 @@ const Nav = styled.nav`
   background-color: white;
   padding: 10px;
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
+  align-items: center; /* Para alinear verticalmente */
   box-shadow: 0 4px 2px -2px gray;
 `;
 
@@ -16,33 +17,33 @@ const StyledNavLink = styled(NavLink)`
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 20px;
+  margin: 0 10px; /* Espacio entre los botones */
   
   &.active {
     background-color: #EEEBEB;
     color: #002EFF;
+  }
 
   &:hover {
     text-decoration: none;
   }
 `;
 
+const DesktopOnly = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const Navbar = () => {
   return (
     <Nav>
-      <StyledNavLink to="/" exact>Formulario</StyledNavLink>
-      {/* Mostrar el botón de "Registros" solo en pantallas de escritorio */}
+      <StyledNavLink to="/">Formulario</StyledNavLink>
       <DesktopOnly>
         <StyledNavLink to="/registros">Registros</StyledNavLink>
       </DesktopOnly>
     </Nav>
   );
 };
-
-// Estilos para ocultar en móviles
-const DesktopOnly = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
 
 export default Navbar;
