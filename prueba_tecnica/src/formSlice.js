@@ -66,7 +66,7 @@ const formSlice = createSlice({
         marcaDos: state.marcaDos,
         precio: state.precio,
       };
-      state.registros = [newRegistro, ...state.registros].slice(0, 10);
+      state.registros = [newRegistro, ...state.registros];
       state.rut = '';
       state.nombre = '';
       state.patente = '';

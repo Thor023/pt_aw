@@ -37,6 +37,15 @@ const DeleteButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+
+  .trash-icon {
+    color: #002EFF;
+  }
+`;
+
+const MensajeCentrado = styled.p`
+  text-align: center;
+  margin-top: 10px; 
 `;
 
 const Registros = () => {
@@ -44,8 +53,14 @@ const Registros = () => {
   const registros = useSelector((state) => state.form.registros);
 
   const handleDeleteRegistro = (index) => {
-    dispatch(deleteRegistro(index));
+    const confirmDelete = window.confirm('¿Estás seguro de que quieres eliminar este registro?');
+
+    if (confirmDelete) {
+      dispatch(deleteRegistro(index));
+    }
   };
+  
+  const registrosMostrados = registros.slice(-10)
 
   return (
     <RegistroContainer>
@@ -59,7 +74,7 @@ const Registros = () => {
         {/* <RegistroColumna><strong>Segunda Marca</strong></RegistroColumna> */}
         <RegistroColumna><strong>Precio</strong></RegistroColumna>
       </RegistroItem>
-      {registros.map((registro, index) => (
+      {registrosMostrados.map((registro, index) => (
         <RegistroItem key={index}>
           <RegistroColumna>{registro.nombre} {registro.apellido}</RegistroColumna>
           <RegistroColumna>{registro.rut}</RegistroColumna>
@@ -69,10 +84,13 @@ const Registros = () => {
           {/* <RegistroColumna>{registro.marcaDos}</RegistroColumna> */}
           <RegistroColumna>{registro.precio}</RegistroColumna>
           <DeleteButton onClick={() => handleDeleteRegistro(index)}>
-            <FaTrash />
+            <FaTrash className='trash-icon'/>
           </DeleteButton>
         </RegistroItem>
       ))}
+      <MensajeCentrado>
+        Mostrando {registrosMostrados.length} registro{registrosMostrados.length !== 1 ? 's' : ''} de un total de {registros.length}
+      </MensajeCentrado>
     </RegistroContainer>
   );
 };

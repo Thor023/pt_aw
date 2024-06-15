@@ -120,10 +120,27 @@ const Formulario = () => {
     setErrors({ ...errors, [name]: "" });
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const newErrors = {};
+
+  //   // Campos requeridos
+  //   const requiredFields = ["nombre", "rut", "patente", "marca", "modelo", "precio"];
+  //   requiredFields.forEach((field) => {
+  //     if (!form[field]) {
+  //       newErrors[field] = "Este campo es obligatorio";
+  //     }
+  //   });
+  //   if (Object.keys(newErrors).length > 0) {
+  //     setErrors(newErrors);
+  //   } else {
+  //     dispatch(addRegistro());
+  //   }
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
-
+  
     // Campos requeridos
     const requiredFields = ["nombre", "rut", "patente", "marca", "modelo", "precio"];
     requiredFields.forEach((field) => {
@@ -131,12 +148,27 @@ const Formulario = () => {
         newErrors[field] = "Este campo es obligatorio";
       }
     });
+  
+    // Validaciones adicionales
+    if (form.nombre && !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(form.nombre)) {
+      newErrors.nombre = "El nombre solo puede contener letras y espacios";
+    }
+  
+    if (form.rut && !/^[0-9]+[-]?[0-9kK]{1}$/.test(form.rut)) {
+      newErrors.rut = "Rut inválido";
+    }
+  
+    if (form.precio && isNaN(form.precio)) {
+      newErrors.precio = "El precio debe ser un número válido";
+    }
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
       dispatch(addRegistro());
     }
   };
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
