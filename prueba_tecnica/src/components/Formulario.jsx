@@ -41,7 +41,6 @@ const Label = styled.label`
   text-transform: uppercase;
   font-size: 0.575em;
   letter-spacing: 0.1em;
-  cursor: pointer;
   color: #002eff;
   position: relative;
   top: 15px;
@@ -77,7 +76,6 @@ const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-
   @media (max-width: 768px) {
     justify-content: center;
   }
